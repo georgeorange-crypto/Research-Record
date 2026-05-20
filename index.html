@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2026-05-21 工作汇报 | 陶鼎文组实习工作汇报</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #eef2f6;
+      --panel: #ffffff;
+      --text: #1f2937;
+      --muted: #64748b;
+      --border: #d8dee8;
+      --accent: #0f766e;
+      --accent-dark: #115e59;
+      --accent-soft: #e6f4f1;
+      --code-bg: #f6f8fa;
+      --shadow: 0 18px 42px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.7;
+    }
+
+    .page {
+      width: min(100% - 32px, 900px);
+      margin: 0 auto;
+      padding: 34px 0 28px;
+    }
+
+    .hero,
+    .card,
+    .stat-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      margin-bottom: 16px;
+      padding: 26px 30px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0;
+      color: #0f172a;
+      font-size: clamp(1.85rem, 3vw, 2.48rem);
+      line-height: 1.25;
+    }
+
+    .subtitle {
+      margin: 10px 0 0;
+      color: var(--muted);
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 18px;
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .site-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 16px;
+    }
+
+    .site-nav a {
+      padding: 7px 11px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--panel);
+      color: #334155;
+      text-decoration: none;
+      font-size: 0.94rem;
+      font-weight: 650;
+    }
+
+    .site-nav a.active,
+    .site-nav a:hover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .stat-card {
+      min-height: 96px;
+      padding: 16px;
+    }
+
+    .stat-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .stat-card strong {
+      display: block;
+      margin-top: 8px;
+      color: #0f172a;
+      font-size: 1.18rem;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+
+    .card {
+      padding: 30px;
+    }
+
+    .notice {
+      margin: 0 0 18px;
+      padding: 12px 14px;
+      border: 1px solid #b7d8d2;
+      border-radius: 8px;
+      background: var(--accent-soft);
+      color: #164e49;
+      font-weight: 650;
+    }
+
+    .quick-links {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 0 0 22px;
+    }
+
+    .quick-links a {
+      display: block;
+      padding: 13px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fbfdff;
+      color: #0f766e;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .quick-links a:hover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .report-content > :first-child,
+    .content-body > :first-child,
+    .empty-state > :first-child,
+    .section > :first-child {
+      margin-top: 0;
+    }
+
+    h2 {
+      margin-top: 1.7em;
+      margin-bottom: 0.65em;
+      color: #111827;
+      font-size: 1.32rem;
+      line-height: 1.35;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.28em;
+    }
+
+    h3 {
+      margin-top: 1.4em;
+      color: #1f2937;
+    }
+
+    p {
+      margin: 0.85em 0;
+    }
+
+    ul,
+    ol {
+      padding-left: 1.35em;
+    }
+
+    li + li {
+      margin-top: 0.28em;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 650;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    code {
+      padding: 0.14em 0.34em;
+      border-radius: 5px;
+      background: var(--code-bg);
+      color: #0f172a;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.92em;
+    }
+
+    pre {
+      overflow-x: auto;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--code-bg);
+    }
+
+    pre code {
+      padding: 0;
+      background: transparent;
+    }
+
+    blockquote {
+      margin: 1.2em 0;
+      padding: 0.5em 1em;
+      border-left: 4px solid var(--accent);
+      background: var(--accent-soft);
+      color: #334155;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.2em 0;
+      font-size: 0.96rem;
+    }
+
+    th,
+    td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8fafc;
+      color: #0f172a;
+    }
+
+    .empty-state {
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fbfdff;
+    }
+
+    .empty-state h2 {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .section {
+      margin-top: 26px;
+    }
+
+    .entry-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .entry-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .entry-list time,
+    .empty-note {
+      color: var(--muted);
+    }
+
+    footer {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      text-align: center;
+    }
+
+    @media (max-width: 780px) {
+      .stats-grid,
+      .quick-links {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        width: min(100% - 20px, 900px);
+        padding-top: 18px;
+      }
+
+      .hero,
+      .card {
+        padding: 20px;
+      }
+
+      .stats-grid,
+      .quick-links {
+        grid-template-columns: 1fr;
+      }
+
+      .entry-list li {
+        display: block;
+      }
+
+      .entry-list time {
+        display: block;
+        margin-top: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <nav class="site-nav" aria-label="页面导航"><a class="active" href="index.html">今日汇报</a>
+<a class="" href="archive.html">日报归档</a>
+<a class="" href="weekly.html">周报</a>
+<a class="" href="papers.html">论文笔记</a>
+<a class="" href="milestones.html">阶段性里程碑</a></nav>
+    <header class="hero">
+      <p class="eyebrow">陶鼎文组实习工作汇报</p>
+      <h1>2026-05-21 工作汇报</h1>
+      <p class="subtitle">今日日期：2026-05-21</p>
+      <div class="meta">
+        <span>自动生成时间：2026-05-21 06:34:22 CST</span>
+        <span>时区：Asia/Shanghai</span>
+      </div>
+    </header>
+    <section class="stats-grid"><article class="stat-card"><span>已记录日报天数</span><strong>1</strong></article>
+<article class="stat-card"><span>最近一次更新时间</span><strong>2026-05-21 06:34:22 CST</strong></article>
+<article class="stat-card"><span>本月记录数量</span><strong>1</strong></article>
+<article class="stat-card"><span>最近一篇周报</span><strong>暂无</strong></article></section>
+    <section class="card">
+      
+    <div class="quick-links" aria-label="快捷入口">
+      <a href="archive.html">日报归档</a>
+      <a href="weekly.html">最近周报</a>
+      <a href="papers.html">论文阅读笔记</a>
+      <a href="milestones.html">阶段性里程碑</a>
+    </div>
+    <article class="report-content"><h1 id="2026-05-21">2026-05-21 工作汇报</h1>
+<h2 id="_1">今日目标</h2>
+<ul>
+<li>熟悉课题组方向与当前项目背景</li>
+<li>整理 AI Systems / AI Infra 相关基础知识</li>
+<li>建立后续工作日报系统</li>
+</ul>
+<h2 id="_2">今日完成</h2>
+<ul>
+<li>搭建 GitHub 工作汇报仓库</li>
+<li>完成 Markdown 日报模板设计</li>
+<li>配置自动生成 index.html 的脚本</li>
+<li>配置 GitHub Actions 自动部署</li>
+</ul>
+<h2 id="_3">遇到的问题</h2>
+<ul>
+<li>需要进一步明确组内项目的具体技术栈</li>
+<li>需要梳理 CUDA、PyTorch、分布式训练、AI 编译器等基础知识之间的关系</li>
+</ul>
+<h2 id="_4">明日计划</h2>
+<ul>
+<li>阅读课题组相关论文或项目文档</li>
+<li>复习 CUDA kernel、GPU memory hierarchy、NCCL/AllReduce 基础</li>
+<li>根据老师安排推进具体任务</li>
+</ul>
+<h2 id="_5">思考与总结</h2>
+<p>今天主要完成了工作留痕系统的搭建。这个仓库不仅是简单的日报记录，也会逐渐成为我在陶鼎文组实习期间的成长轨迹、技术积累和阶段性成果展示。</p></article>
+    <section class="section">
+      <h2>最近工作记录</h2>
+      <ul class="entry-list">
+<li><a href="reports/2026-05-21.md">2026-05-21 工作汇报</a><time datetime="2026-05-21">2026-05-21</time></li>
+</ul>
+    </section>
+    
+    </section>
+    <footer>
+      <div>Generated by GitHub Actions</div>
+      <div>Last updated: 2026-05-21 06:34:22 CST</div>
+    </footer>
+  </main>
+</body>
+</html>
