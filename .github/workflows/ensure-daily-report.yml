@@ -1,0 +1,42 @@
+name: Ensure Daily Report Template
+
+on:
+  # GitHub Actions 的 cron 使用 UTC；15:45 UTC 对应 Asia/Shanghai 当日 23:45。
+  schedule:
+    - cron: "45 15 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: "daily-report-template"
+  cancel-in-progress: false
+
+jobs:
+  ensure:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Ensure today report exists
+        run: python scripts/ensure_today_report.py
+
+      - name: Commit generated report template
+        run: |
+          if git diff --quiet -- reports; then
+            echo "No report template changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports
+          git commit -m "Create daily report template"
+          git push
