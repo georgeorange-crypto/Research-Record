@@ -38,6 +38,10 @@ def build_report_template(date_text: str) -> str:
 
 - 
 
+## 事务缘由
+
+- 
+
 ## 遇到的问题
 
 - 
