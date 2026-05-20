@@ -4,3 +4,10 @@ __pycache__/
 .venv/
 venv/
 .DS_Store
+
+*.i
+*.ii
+*.gpu
+*.ptx
+*.cubin
+*.fatbin
