@@ -1,8 +1,8 @@
-# 陶鼎文组实习工作汇报
+# 科研实习工作记录
 
-这是一个用于中国科学院计算技术研究所高性能计算机研究中心陶鼎文课题组实习期间每日工作汇报、周报总结、论文阅读记录和阶段性进度留痕的自动化仓库。
+这是一个用于实习期间每日工作汇报、周报总结、阅读记录和阶段性进度留痕的自动化仓库。
 
-每天只需要新增 Markdown 文件，GitHub Actions 会自动生成静态页面并部署到 GitHub Pages。首页优先展示当天日报；如果当天还没有记录，则自动展示最近一篇日报，并提示“今日暂无记录，当前展示最近一次工作记录”。
+每天可以手动新增 `.md` 日报文件；如果当天晚上 23:45 仍然没有对应日期的日报，自动化流程会创建一份空白日报模板，方便后续补充。首页优先展示当天日报；如果当天还没有记录，则自动展示最近一篇日报，并提示“今日暂无记录，当前展示最近一次工作记录”。
 
 ## 目录结构
 
@@ -16,6 +16,7 @@
 ├── paper-notes/
 ├── milestones.md
 ├── scripts/
+│   ├── ensure_today_report.py
 │   └── generate_index.py
 ├── index.html
 ├── archive.html
@@ -24,7 +25,8 @@
 ├── milestones.html
 └── .github/
     └── workflows/
-        └── build-and-deploy.yml
+        ├── build-and-deploy.yml
+        └── ensure-daily-report.yml
 ```
 
 ## 页面说明
@@ -32,12 +34,12 @@
 - `index.html`：首页，展示今日工作汇报；当天日报不存在时展示最近一篇日报。
 - `archive.html`：日报归档页，按时间倒序列出全部日报。
 - `weekly.html`：周报页，展示最近一篇周报并列出历史周报。
-- `papers.html`：论文笔记页，列出 `paper-notes/` 下的论文阅读笔记。
+- `papers.html`：阅读笔记页，列出 `paper-notes/` 下的阅读笔记。
 - `milestones.html`：阶段性里程碑页，渲染 `milestones.md`。
 
 ## 日报使用方式
 
-每天在 `reports/` 下创建日期命名的 Markdown 文件：
+每天在 `reports/` 下创建日期命名的 `.md` 文件：
 
 ```text
 reports/YYYY-MM-DD.md
@@ -76,9 +78,24 @@ reports/2026-05-22.md
 
 ```
 
+## 自动补日报模板
+
+仓库包含 `ensure-daily-report.yml` 自动化流程：
+
+- 每天北京时间 23:45 检查 `reports/YYYY-MM-DD.md` 是否存在。
+- 如果文件已经存在，不做任何修改。
+- 如果文件不存在，自动创建一份空白日报模板并提交到仓库。
+- 自动提交后，会触发页面重新生成与部署。
+
+也可以手动运行：
+
+```bash
+python scripts/ensure_today_report.py
+```
+
 ## 周报使用方式
 
-在 `weekly/` 目录下新增周报 Markdown 文件，推荐使用周编号或周结束日期命名：
+在 `weekly/` 目录下新增周报 `.md` 文件，推荐使用周编号或周结束日期命名：
 
 ```text
 weekly/2026-W21.md
@@ -94,7 +111,7 @@ weekly/2026-05-24.md
 
 - 
 
-## 技术收获
+## 学习收获
 
 - 
 
@@ -109,31 +126,31 @@ weekly/2026-05-24.md
 
 `weekly.html` 会展示最近一篇周报，并保留历史周报入口。
 
-## 论文笔记使用方式
+## 阅读笔记使用方式
 
-在 `paper-notes/` 目录下新增论文阅读笔记。文件名可以使用日期、论文简称或主题：
+在 `paper-notes/` 目录下新增阅读笔记。文件名可以使用日期、资料简称或主题：
 
 ```text
-paper-notes/2026-05-21-ai-infra-survey.md
-paper-notes/flashattention.md
+paper-notes/2026-05-21-reading-note.md
+paper-notes/topic-summary.md
 ```
 
 建议结构：
 
 ```markdown
-# 论文标题
+# 阅读笔记标题
 
 ## 基本信息
 
-- 作者：
-- 会议/期刊：
-- 年份：
+- 来源：
+- 日期：
+- 主题：
 
 ## 核心问题
 
 - 
 
-## 方法概述
+## 内容概述
 
 - 
 
@@ -146,21 +163,21 @@ paper-notes/flashattention.md
 - 
 ```
 
-`papers.html` 会按时间或文件名倒序列出全部论文笔记。
+`papers.html` 会按时间或文件名倒序列出全部阅读笔记。
 
 ## 里程碑使用方式
 
-阶段性成果记录在仓库根目录的 `milestones.md` 中。建议记录关键节点、阶段成果、实验进展、汇报材料和后续计划。
+阶段性成果记录在仓库根目录的 `milestones.md` 中。建议记录关键节点、阶段成果、实践进展、汇报材料和后续计划。
 
 示例：
 
 ```markdown
 # 阶段性里程碑
 
-## 2026-05-21：建立实习工作留痕系统
+## 2026-05-21：建立工作留痕系统
 
-- 完成日报、周报、论文笔记和里程碑页面。
-- 配置 GitHub Actions 自动部署。
+- 完成日报、周报、阅读笔记和里程碑页面。
+- 配置自动化部署流程。
 ```
 
 ## 本地预览
@@ -182,9 +199,9 @@ papers.html
 milestones.html
 ```
 
-## GitHub Pages 配置
+## 页面托管配置
 
-第一次使用时，需要在 GitHub 仓库中启用 GitHub Pages：
+第一次使用时，需要在仓库设置中启用静态页面托管：
 
 1. 打开仓库的 `Settings`。
 2. 进入 `Pages`。
@@ -193,14 +210,15 @@ milestones.html
 
 ## 自动化逻辑
 
-- `push` 触发：当 `main` 分支中的 `reports/**`、`weekly/**`、`paper-notes/**`、`scripts/**`、`milestones.md`、`requirements.txt` 或 workflow 文件发生变化时自动构建部署。
-- 定时触发：每天北京时间 06:00 自动运行。GitHub Actions cron 使用 UTC，因此 workflow 中配置为 `0 22 * * *`。
-- 手动触发：可以在 GitHub Actions 页面通过 `workflow_dispatch` 手动运行。
+- 页面构建：当 `main` 分支中的 `reports/**`、`weekly/**`、`paper-notes/**`、`scripts/**`、`milestones.md`、`requirements.txt` 或页面构建流程文件发生变化时自动构建部署。
+- 每日构建：每天北京时间 06:00 自动生成并部署静态页面。
+- 日报补全：每天北京时间 23:45 自动检查并补充当日空白日报模板。
+- 手动触发：可以在仓库的自动化页面手动运行。
 
 ## 后续可扩展方向
 
-- 生成月报。
-- 增加技术关键词统计。
-- 增加论文阅读统计。
+- 生成月度汇总。
+- 增加关键词统计。
+- 增加阅读记录统计。
 - 增加项目里程碑时间线。
-- 增加导师汇报版摘要。
+- 增加汇报摘要页面。
