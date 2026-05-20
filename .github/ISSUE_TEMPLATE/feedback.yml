@@ -1,0 +1,38 @@
+name: 留言点评
+description: 对工作记录、阶段进展或后续安排留下建议
+title: "[留言点评] "
+labels:
+  - page-feedback
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢留下建议。提交后，系统会自动将留言和后续回复整理到归档页面。
+  - type: textarea
+    id: feedback
+    attributes:
+      label: 留言或点评
+      description: 可以记录对工作进展、日报内容、阶段安排或后续方向的建议。
+      placeholder: 请在这里填写留言或点评。
+    validations:
+      required: true
+  - type: input
+    id: related-date
+    attributes:
+      label: 关联日期或页面
+      description: 可选，例如 2026-05-21、日报归档、周报或里程碑。
+      placeholder: 2026-05-21
+    validations:
+      required: false
+  - type: dropdown
+    id: category
+    attributes:
+      label: 类型
+      options:
+        - 工作进展
+        - 内容补充
+        - 后续安排
+        - 问题提醒
+        - 其他
+    validations:
+      required: false

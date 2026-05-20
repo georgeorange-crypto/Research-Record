@@ -15,7 +15,11 @@ REPORTS_DIR = "reports"
 WEEKLY_DIR = "weekly"
 PAPER_NOTES_DIR = "paper-notes"
 MILESTONES_FILE = "milestones.md"
+FEEDBACK_FILE = "feedback/feedback-log.md"
 RECENT_REPORT_LIMIT = 10
+SITE_URL = "https://georgeorange-crypto.github.io/Research-Record/"
+FEEDBACK_ISSUES_URL = "https://github.com/georgeorange-crypto/Research-Record/issues?q=is%3Aissue%20label%3Apage-feedback"
+NEW_FEEDBACK_URL = "https://github.com/georgeorange-crypto/Research-Record/issues/new?template=feedback.yml"
 
 
 def get_project_root() -> Path:
@@ -144,6 +148,7 @@ def build_nav(active: str) -> str:
         ("weekly.html", "周报", "weekly"),
         ("papers.html", "论文笔记", "papers"),
         ("milestones.html", "阶段性里程碑", "milestones"),
+        ("feedback.html", "留言点评", "feedback"),
     ]
     items = "\n".join(
         f'<a class="{"active" if key == active else ""}" href="{href}">{label}</a>'
@@ -330,6 +335,39 @@ def build_page(
     .quick-links a:hover {{
       border-color: var(--accent);
       background: var(--accent-soft);
+    }}
+
+    .link-panel {{
+      margin: 0 0 18px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fbfdff;
+      color: var(--muted);
+    }}
+
+    .link-panel strong {{
+      display: block;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }}
+
+    .action-row {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0 22px;
+    }}
+
+    .action-row a {{
+      display: inline-block;
+      padding: 9px 13px;
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      text-decoration: none;
+      font-weight: 700;
     }}
 
     .report-content > :first-child,
@@ -565,7 +603,14 @@ def build_index_page(
       <a href="weekly.html">最近周报</a>
       <a href="papers.html">论文阅读笔记</a>
       <a href="milestones.html">阶段性里程碑</a>
+      <a href="feedback.html">留言点评</a>
     </div>
+    """
+    site_link = f"""
+    <section class="link-panel">
+      <strong>在线访问地址</strong>
+      <a href="{escape(SITE_URL)}">{escape(SITE_URL)}</a>
+    </section>
     """
     stats = f'<section class="stats-grid">{build_stat_cards(reports, weekly_reports, generated_at, today)}</section>'
     recent = f"""
@@ -574,7 +619,7 @@ def build_index_page(
       {build_report_list(reports[:RECENT_REPORT_LIMIT], "reports 目录下还没有可展示的历史记录。")}
     </section>
     """
-    content = f'{quick_links}{notice}<article class="report-content">{report_html}</article>{recent}'
+    content = f'{site_link}{quick_links}{notice}<article class="report-content">{report_html}</article>{recent}'
 
     return build_page(
         title=display_title,
@@ -662,6 +707,40 @@ def build_milestones_page(root: Path, generated_at: str) -> str:
     )
 
 
+def build_feedback_page(root: Path, generated_at: str) -> str:
+    feedback_path = root / FEEDBACK_FILE
+    text = load_markdown(feedback_path)
+    if text:
+        log_html = render_markdown(text)
+    else:
+        log_html = """
+        <section class="empty-state">
+          <h2>暂无留言点评记录</h2>
+          <p>当前还没有归档的留言或点评。可以通过下方入口提交反馈，自动化流程会将反馈记录到案。</p>
+        </section>
+        """
+
+    content = f"""
+    <section class="content-body">
+      <h2>留言与点评入口</h2>
+      <p>本页面用于收集查看者对工作记录的意见、问题和阶段性建议。提交后，自动化流程会整理为 Markdown 留痕文件。</p>
+      <div class="action-row">
+        <a href="{escape(NEW_FEEDBACK_URL)}">提交新的留言点评</a>
+        <a href="{escape(FEEDBACK_ISSUES_URL)}">查看原始留言区</a>
+      </div>
+      <h2>归档记录</h2>
+      {log_html}
+    </section>
+    """
+    return build_page(
+        title="留言点评",
+        subtitle="收集查看者反馈，并自动归档为可追溯记录。",
+        active="feedback",
+        generated_at=generated_at,
+        content=content,
+    )
+
+
 def write_page(root: Path, filename: str, html: str) -> None:
     output_path = root / filename
     output_path.write_text(html, encoding="utf-8")
@@ -701,6 +780,7 @@ def main() -> int:
                 list_heading="全部论文笔记",
             ),
             "milestones.html": build_milestones_page(root, generated_at),
+            "feedback.html": build_feedback_page(root, generated_at),
         }
 
         for filename, html in pages.items():

@@ -1,0 +1,57 @@
+name: Record Feedback
+
+on:
+  issues:
+    types:
+      - opened
+      - edited
+      - labeled
+      - reopened
+      - closed
+  issue_comment:
+    types:
+      - created
+      - edited
+      - deleted
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: read
+
+concurrency:
+  group: "feedback-record"
+  cancel-in-progress: false
+
+jobs:
+  record:
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      contains(join(github.event.issue.labels.*.name, ','), 'page-feedback')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Generate feedback log
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/record_feedback.py
+
+      - name: Commit feedback log
+        run: |
+          if git diff --quiet -- feedback/feedback-log.md; then
+            echo "No feedback log changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add feedback/feedback-log.md
+          git commit -m "Record page feedback"
+          git push

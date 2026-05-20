@@ -8,6 +8,7 @@ on:
       - "reports/**"
       - "weekly/**"
       - "paper-notes/**"
+      - "feedback/**"
       - "scripts/**"
       - "milestones.md"
       - "requirements.txt"
