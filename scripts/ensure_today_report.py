@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import sys
 from datetime import datetime
@@ -32,19 +32,23 @@ def build_report_template(date_text: str) -> str:
 
 ## 今日目标
 
-- 
+-
 
 ## 今日完成
 
-- 
+-
+
+## 事务缘由
+
+-
 
 ## 遇到的问题
 
-- 
+-
 
 ## 明日计划
 
-- 
+-
 
 ## 思考与总结
 

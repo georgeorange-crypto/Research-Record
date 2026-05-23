@@ -8,10 +8,11 @@ on:
       - "reports/**"
       - "weekly/**"
       - "paper-notes/**"
+      - "feedback/**"
       - "scripts/**"
       - "milestones.md"
       - "requirements.txt"
-      - ".github/workflows/build-and-deploy.yml"
+      - ".github/workflows/**"
   # GitHub Actions 的 cron 使用 UTC；22:00 UTC 对应 Asia/Shanghai 次日 06:00。
   schedule:
     - cron: "0 22 * * *"
