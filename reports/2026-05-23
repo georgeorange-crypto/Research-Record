@@ -1,0 +1,9 @@
+1.下载源代码并用Trae阅读本项目并生成文档以供学习和维护
+2.重点阅读文件：
+include/skyfs_msg.h
+client/client_ito.c
+osd/osd_dop.c
+mds/mds_op.c
+amp-rdma/source/userspace/amp_interface.c
+3.询问GPT通信优化以及AIInfra方向顶会文章并下载到本地管理
+4.更新本汇报日志
